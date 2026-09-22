@@ -106,18 +106,11 @@ series_train, series_val = train_test_split(
     random_state=42
 )
 
-train = dataset[
-    dataset["registro"].isin(series_train["registro"])
-].copy()
+train = dataset[dataset["registro"].isin(series_train["registro"])].copy()
 
-val = dataset[
-    dataset["registro"].isin(series_val["registro"])
-].copy()
+val = dataset[dataset["registro"].isin(series_val["registro"])].copy()
 
-
-test = dataset[
-    dataset["registro"].isin(series_test["registro"])
-].copy()
+test = dataset[dataset["registro"].isin(series_test["registro"])].copy()
 
 print("Series de entrenamiento:", train["registro"].nunique())
 print("Series de validación:", val["registro"].nunique())
@@ -125,18 +118,19 @@ print("Series de prueba:", test["registro"].nunique())
 
 entradas = ["ax", "ay", "az"]
 
-X_train = train[entradas]
+x_train = train[entradas]
 y_train = train["etiqueta"]
 
-X_val = val[entradas]
+x_val = val[entradas]
 y_val = val["etiqueta"]
 
-X_test = test[entradas]
+x_test = test[entradas]
 y_test = test["etiqueta"]
 
 escalador = StandardScaler()
 
-X_train_escalado = escalador.fit_transform(X_train)
+X_train_escalado = escalador.fit_transform(x_train)
 
-X_val_escalado = escalador.transform(X_val)
-X_test_escalado = escalador.transform(X_test)
+X_val_escalado = escalador.transform(x_val)
+X_test_escalado = escalador.transform(x_test)
+
