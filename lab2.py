@@ -54,7 +54,7 @@ for movimiento in movimientos:
             # Filtro de altas y bajas
             datos[eje] = sosfiltfilt(filtro,datos[eje].to_numpy())
             
-            # Promedio móvil
+            # Promedio movil
             datos[eje] = (datos[eje].rolling(window=5,center=True,min_periods=5).mean())
         
         # Filtro de tiempo 
