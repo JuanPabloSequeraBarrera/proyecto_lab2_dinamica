@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np 
 import matplotlib.pyplot as plt
+import joblib
 from zipfile import ZipFile
 from scipy.signal import butter, sosfiltfilt
 from pathlib import Path
@@ -152,6 +153,16 @@ modelo = MLPClassifier(
 
 #ENTRENAMIENTO
 modelo.fit(X_train_escalado,y_train)
+
+
+# Guardar lo necesario para evaluar una toma nueva desde evaluacion.py.
+carpeta_modelo = Path(__file__).resolve().parent / "modelo"
+carpeta_modelo.mkdir(exist_ok=True)
+joblib.dump(
+    {"modelo": modelo, "escalador": escalador, "entradas": entradas},
+    carpeta_modelo / "modelo_movimientos.joblib"
+)
+print("Modelo guardado:", carpeta_modelo)
 
 print("Finaliza entrenamiento")
 print("Épocas realizadas: ", modelo.n_iter_)
