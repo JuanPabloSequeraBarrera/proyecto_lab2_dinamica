@@ -6,6 +6,12 @@ from scipy.signal import butter, sosfiltfilt
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import(
+    accuracy_score,
+    classification_report,
+    ConfusionMatrixDisplay
+)
 
 
 # Carpeta data 
@@ -134,3 +140,53 @@ X_train_escalado = escalador.fit_transform(x_train)
 X_val_escalado = escalador.transform(x_val)
 X_test_escalado = escalador.transform(x_test)
 
+#DEFINICION DEL MODELO
+modelo = MLPClassifier(
+    hidden_layer_sizes=(100,50),
+    activation="relu",
+    solver="adam",
+    max_iter=300,
+    random_state=42
+)
+
+
+#ENTRENAMIENTO
+modelo.fit(X_train_escalado,y_train)
+
+print("Finaliza entrenamiento")
+print("Épocas realizadas: ", modelo.n_iter_)
+print("Activación de salida: ", modelo.out_activation_)
+
+#predicciones
+y_pred_val = modelo.predict(X_val_escalado)
+
+#exactitud 
+exactitud = accuracy_score(y_val,y_pred_val)
+print(f"\nExactitud de validación: {exactitud:.2%}")
+
+#precision, recall y f1-score
+
+print("clasificacion")
+print(classification_report(
+    y_val,
+    y_pred_val,
+    labels=movimientos,
+    digits=3,
+    zero_division=0
+))
+
+#matriz 
+
+ConfusionMatrixDisplay.from_predictions(
+    y_val,
+    y_pred_val,
+    labels=movimientos,
+    cmap="Blues",
+    values_format="d"
+)
+
+plt.title("Matriz de confusión")
+plt.xlabel("Movimiento predicho")
+plt.ylabel("Movimiento real")
+plt.tight_layout()
+plt.show()
