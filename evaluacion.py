@@ -12,7 +12,6 @@ from sklearn.metrics import accuracy_score, classification_report, ConfusionMatr
 BASE = Path(__file__).resolve().parent
 ARCHIVO_CIRCUITO = BASE / "evaluacion" / "circuito.zip"
 ARCHIVO_MODELO = BASE / "modelo" / "modelo_movimientos.joblib"
-CARPETA_RESULTADOS = BASE / "evaluacion" / "resultados"
 
 
 INTERVALOS = [
@@ -82,6 +81,4 @@ plt.title("Evaluación del circuito")
 plt.xlabel("Movimiento predicho")
 plt.ylabel("Movimiento real")
 plt.tight_layout()
-plt.savefig(CARPETA_RESULTADOS / "matriz_confusion.png", dpi=150)
 plt.close()
-print("Resultados guardados en:", CARPETA_RESULTADOS)
