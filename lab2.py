@@ -155,15 +155,14 @@ modelo = MLPClassifier(
 modelo.fit(X_train_escalado,y_train)
 
 
-# Guardar lo necesario para evaluar una toma nueva desde evaluacion.py.
+# Guardo lo necesario para evaluar una toma nueva desde evaluacion.py.
 carpeta_modelo = Path(__file__).resolve().parent / "modelo"
 carpeta_modelo.mkdir(exist_ok=True)
+#creo el archvio .joblib
 joblib.dump(
     {"modelo": modelo, "escalador": escalador, "entradas": entradas},
     carpeta_modelo / "modelo_movimientos.joblib"
 )
-print("Modelo guardado:", carpeta_modelo)
-
 print("Finaliza entrenamiento")
 print("Épocas realizadas: ", modelo.n_iter_)
 print("Activación de salida: ", modelo.out_activation_)
@@ -196,7 +195,7 @@ ConfusionMatrixDisplay.from_predictions(
     values_format="d"
 )
 
-plt.title("Matriz de confusión")
+plt.title("Matriz de confusión del entrenamiento")
 plt.xlabel("Movimiento predicho")
 plt.ylabel("Movimiento real")
 plt.tight_layout()
